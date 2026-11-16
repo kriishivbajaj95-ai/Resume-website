@@ -1,0 +1,653 @@
+/* =========================================================
+   Kriishiv Bajaj - Resume website
+   Mid-term assignment, Website Development (IIMBx)
+
+   Contents
+   1. Colour palette and fonts (CSS variables)
+   2. Element selectors  (body, h1, h2, a ...)
+   3. Layout helpers     (.container, .section-grid, flexbox)
+   4. Navigation bar     (flexbox + position: sticky, links between pages)
+   5. Hero               (#hero, position: absolute monogram)
+   6. Sections           (.section, .entry, .skill-groups)
+   7. Contact and footer (#contact, footer)
+   8. Smaller screens    (media queries)
+   ========================================================= */
+
+
+/* ---------- 1. Colour palette and fonts ---------- */
+/* The same six colours are used on every page:
+
+   #123524  forest green   hero, banners, contact page, headings
+   #2f6b4f  leaf green     links, dates, small details
+   #f5b301  marigold       buttons, initials tile, highlights
+   #f2f5ee  pale paper     page background
+   #e4ebdf  mist           tinted sections
+   #1c2a22  ink            body text
+
+   Fonts (loaded from Google Fonts in each HTML file):
+   "Bricolage Grotesque" for headings, "Instrument Sans" for body text. */
+
+
+/* ---------- 2. Element selectors ---------- */
+* {
+  box-sizing: border-box;   /* padding is counted inside the width */
+}
+
+html {
+  scroll-behavior: smooth;  /* "Back to top" glides instead of jumping */
+}
+
+body {
+  margin: 0;
+  background-color: #f2f5ee;
+  color: #1c2a22;
+  font-family: "Instrument Sans", "Segoe UI", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+h1, h2, h3 {
+  font-family: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  color: #123524;
+  line-height: 1.1;
+  margin: 0;
+}
+
+h2 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+p {
+  margin: 0 0 1rem 0;
+}
+
+ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+a {
+  color: #2f6b4f;
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  color: #123524;
+}
+
+/* Keyboard users get a clear outline on whatever is focused */
+a:focus-visible {
+  outline: 3px solid #f5b301;
+  outline-offset: 3px;
+}
+
+
+/* ---------- 3. Layout helpers ---------- */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;          /* centres the block */
+  padding: 0 28px;
+}
+
+/* Every content section: title on the left, content on the right */
+.section-grid {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+/* The section title has a fixed width and stays in view while you scroll */
+.section-grid h2 {
+  width: 240px;
+  flex-shrink: 0;          /* never squeezed narrower than 240px */
+  position: sticky;
+  top: 96px;
+}
+
+.section-body {
+  flex: 1;                 /* takes the rest of the row */
+  max-width: 680px;        /* keeps lines a comfortable length to read */
+}
+
+
+/* ---------- 4. Navigation bar ---------- */
+#site-header {
+  position: sticky;        /* stays at the top while scrolling */
+  top: 0;
+  z-index: 10;             /* sits above the rest of the page */
+  background-color: #f2f5ee;
+  border-bottom: 1px solid #e4ebdf;
+}
+
+.navbar {
+  display: flex;                    /* name on the left, links on the right */
+  justify-content: space-between;
+  align-items: center;
+  height: 68px;
+}
+
+.brand {
+  font-family: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #123524;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+  padding: 0;
+}
+
+.nav-links a {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1c2a22;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  color: #2f6b4f;
+  text-decoration: underline;
+}
+
+/* The page you are currently on is underlined in the navbar */
+.nav-links .active {
+  color: #123524;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: #f5b301;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+}
+
+/* The Contact link is styled as a button (two classes on one selector) */
+.nav-links .nav-button {
+  background-color: #123524;
+  color: #ffffff;
+  padding: 8px 18px;
+  border-radius: 999px;
+}
+
+.nav-links .nav-button.active {
+  background-color: #f5b301;
+  color: #123524;
+  text-decoration: none;
+}
+
+.nav-links .nav-button:hover {
+  background-color: #2f6b4f;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+
+/* ---------- 5. Hero ---------- */
+#hero {
+  background-color: #123524;
+  color: #f2f5ee;
+  padding: 88px 0 56px 0;
+}
+
+.hero-inner {
+  position: relative;      /* the monogram is positioned against this box */
+}
+
+#hero h1 {
+  color: #f2f5ee;
+  font-size: 10.5rem;       /* made smaller on phones, see section 8 */
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  margin-bottom: 36px;
+}
+
+/* Marigold tile with initials, pinned to the top-right corner of the hero */
+.monogram {
+  position: absolute;
+  top: 0;
+  right: 28px;
+  width: 190px;
+  height: 230px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 16px 20px;
+  background-color: #f5b301;
+  color: #123524;
+  font-family: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1;
+  border-radius: 6px;
+  object-fit: cover;       /* only matters if you swap in a photo */
+  transform: rotate(4deg);
+}
+
+.hero-intro {
+  max-width: 560px;
+  font-size: 1.3rem;
+  line-height: 1.5;
+  margin-bottom: 32px;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 72px;
+}
+
+.button {
+  display: inline-block;
+  padding: 13px 26px;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid #f5b301;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.button-solid {
+  background-color: #f5b301;
+  color: #123524;
+}
+
+.button-solid:hover {
+  background-color: #f2f5ee;
+  border-color: #f2f5ee;
+  color: #123524;
+}
+
+.button-outline {
+  background-color: transparent;
+  color: #f2f5ee;
+}
+
+.button-outline:hover {
+  background-color: #f5b301;
+  color: #123524;
+}
+
+/* Three quick facts in a row along the bottom of the hero */
+.facts {
+  display: flex;
+  gap: 48px;
+  margin: 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(242, 245, 238, 0.25);
+}
+
+.fact dt {
+  font-size: 0.9rem;
+  color: #f5b301;
+  margin-bottom: 2px;
+}
+
+.fact dd {
+  margin: 0;
+  font-weight: 500;
+}
+
+
+/* Green banner at the top of the Experience and Education pages */
+.page-banner {
+  background-color: #123524;
+  color: #f2f5ee;
+  padding: 72px 0 56px 0;
+}
+
+.page-banner h1 {
+  color: #f2f5ee;
+  font-size: 6.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 16px;
+}
+
+.page-banner p {
+  max-width: 560px;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+/* "Next page" button at the bottom of each page */
+.next-page {
+  margin: 40px 0 0 0;
+}
+
+.next-page-center {
+  margin-top: 64px;
+}
+
+.button-dark {
+  background-color: #123524;
+  border-color: #123524;
+  color: #f2f5ee;
+}
+
+.button-dark:hover {
+  background-color: #f5b301;
+  border-color: #f5b301;
+  color: #123524;
+}
+
+
+/* ---------- 6. Sections ---------- */
+.section {
+  padding: 96px 0;
+  scroll-margin-top: 68px;   /* so the sticky navbar doesn't cover the title */
+}
+
+.section-tinted {
+  background-color: #e4ebdf;
+}
+
+.lead {
+  font-family: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  font-size: 1.7rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #123524;
+  margin-bottom: 1.5rem;
+}
+
+/* Skills: three columns, each with a green rule on top */
+.skill-groups {
+  display: flex;
+  gap: 32px;
+  max-width: none;
+}
+
+.skill-group {
+  flex: 1;                 /* three equal columns */
+  border-top: 4px solid #2f6b4f;
+  padding-top: 16px;
+}
+
+.skill-group h3 {
+  margin-bottom: 12px;
+}
+
+.skill-group ul {
+  list-style: none;
+  padding: 0;
+}
+
+.skill-group li {
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(18, 53, 36, 0.14);
+}
+
+/* Experience and education entries: date on the left, details on the right */
+.entry {
+  display: flex;
+  gap: 24px;
+  padding: 28px 0;
+  border-top: 1px solid rgba(18, 53, 36, 0.18);
+}
+
+.entry:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.entry-date {
+  width: 150px;
+  flex-shrink: 0;
+  font-weight: 600;
+  color: #2f6b4f;
+  margin: 0;
+}
+
+.entry-detail {
+  flex: 1;
+}
+
+.entry-place {
+  margin: 4px 0 10px 0;
+  color: #2f6b4f;
+  font-weight: 500;
+}
+
+.entry-detail li {
+  margin-bottom: 4px;
+}
+
+.score {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 10px;
+  background-color: #123524;
+  color: #f2f5ee;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+/* Yellow marker on every blank that still needs real details.
+   Delete the <span class="todo"> tags in index.html once filled in. */
+.todo {
+  background-color: #ffe9a3;
+  color: #5a4300;
+  padding: 0 4px;
+  border-bottom: 2px dashed #f5b301;
+}
+
+
+/* ---------- 7. Contact and footer ---------- */
+#contact {
+  background-color: #123524;
+  color: #f2f5ee;
+  padding: 104px 0;
+  min-height: 70vh;        /* fills the screen on the Contact page */
+}
+
+#contact h1 {
+  color: #f5b301;
+  font-size: 6.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+}
+
+.contact-text {
+  max-width: 520px;
+  font-size: 1.2rem;
+  margin-bottom: 28px;
+}
+
+.email-link {
+  display: inline-block;
+  font-family: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #f2f5ee;
+  overflow-wrap: anywhere;
+}
+
+.email-link:hover {
+  color: #f5b301;
+}
+
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  list-style: none;
+  padding: 0;
+  margin-top: 44px;
+}
+
+.social-links a {
+  color: #f2f5ee;
+  font-weight: 500;
+}
+
+.social-links a:hover {
+  color: #f5b301;
+}
+
+footer {
+  background-color: #0c2418;
+  color: rgba(242, 245, 238, 0.75);
+  font-size: 0.95rem;
+  padding: 22px 0;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+}
+
+footer p {
+  margin: 0;
+}
+
+footer a {
+  color: #f5b301;
+}
+
+footer a:hover {
+  color: #f2f5ee;
+}
+
+
+/* ---------- 8. Smaller screens ---------- */
+@media (max-width: 860px) {
+  /* Stack the section title above its content */
+  .section-grid {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .section-grid h2 {
+    width: auto;
+    position: static;
+  }
+
+  .section-body {
+    width: 100%;
+  }
+
+  /* Smaller headline sizes for tablets */
+  #hero h1 {
+    font-size: 6rem;
+  }
+
+  .page-banner h1,
+  #contact h1 {
+    font-size: 4.5rem;
+  }
+
+  .section {
+    padding: 64px 0;
+  }
+
+  .skill-groups {
+    flex-direction: column;
+  }
+
+  /* Smaller monogram that sits in the normal flow above the name */
+  .monogram {
+    position: static;
+    width: 84px;
+    height: 100px;
+    font-size: 2rem;
+    padding: 8px 10px;
+    margin-bottom: 28px;
+    transform: rotate(-4deg);
+  }
+
+  #hero {
+    padding: 48px 0 40px 0;
+  }
+
+  .facts {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .button-row {
+    margin-bottom: 48px;
+  }
+}
+
+@media (max-width: 620px) {
+  body {
+    font-size: 17px;
+  }
+
+  /* Navbar: name on one line, links on a second line */
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    gap: 6px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    gap: 6px 16px;
+  }
+
+  .nav-links a {
+    font-size: 0.95rem;
+  }
+
+  .nav-links .nav-button {
+    padding: 4px 12px;
+  }
+
+  .section,
+  #contact {
+    scroll-margin-top: 96px;
+  }
+
+  .entry {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .entry-date {
+    width: auto;
+  }
+
+  /* Smaller headline sizes for phones */
+  #hero h1 {
+    font-size: 4rem;
+  }
+
+  .page-banner h1,
+  #contact h1 {
+    font-size: 3rem;
+  }
+
+  .email-link {
+    font-size: 1.3rem;
+  }
+}
+
+/* Respect people who turn animations off on their device */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .button {
+    transition: none;
+  }
+}
